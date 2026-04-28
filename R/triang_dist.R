@@ -89,3 +89,58 @@ ptriang <- function(q, min, max, mode) {
 
   y
 }
+
+#' @title Quantile Function of the Triangular Distribution
+#' @description Calculates the quantile function for a triangular distribution.
+#' This is the inverse of the cumulative distribution function (CDF).
+#' @param p Vector of probabilities.
+#' @param min Lower limit (a).
+#' @param max Upper limit (b).
+#' @param mode Mode (c).
+#' @return A numeric vector of quantiles.
+#' @export
+
+qtriang <- function(p, min, max, mode) {
+
+  if (any(min > max)) {
+    stop("Invalid parameters: min > max")
+  } else if (any(mode < min)) {
+    stop("Invalid parameters: mode < min")
+  } else if (any(mode > max)) {
+    stop("Invalid parameters: mode > max")
+  } else if (any(p < 0)) {
+    stop("Invalid parameters: p < 0")
+  } else if (any(p > 1)) {
+    stop("Invalid parameters: p > 1")
+  }
+
+  n <- max(length(p), length(min), length(max), length(mode))
+  p <- rep_len(p, n)
+  min <- rep_len(min, n)
+  max <- rep_len(max, n)
+  mode <- rep_len(mode, n)
+  x <- rep(0, n)
+
+  p_mode <- (mode - min) / (max - min)
+
+  low_branch <- p < p_mode & p != 0
+  b_a1 <- (max[low_branch] - min[low_branch])
+  c_a <- (mode[low_branch] - min[low_branch])
+  x[low_branch] <- min[low_branch] + sqrt(p[low_branch] * b_a1 * c_a)
+
+  upp_branch <- p > p_mode & p != 1
+  b_a2 <- (max[upp_branch] - min[upp_branch])
+  b_c <- (max[upp_branch] - mode[upp_branch])
+  x[upp_branch] <- max[upp_branch] - sqrt((1 - p[upp_branch]) * b_a2 * b_c)
+
+  pmode_eq_p <- p_mode == p
+  x[pmode_eq_p] <- mode[pmode_eq_p]
+
+  p_1 <- p == 1
+  x[p_1] <- max[p_1]
+
+  p_0 <- p == 0
+  x[p_0] <- min[p_0]
+
+  x
+}

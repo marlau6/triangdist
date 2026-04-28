@@ -2,3 +2,4 @@
 
 export(dtriang)
 export(ptriang)
+export(qtriang)
