@@ -154,6 +154,7 @@ qtriang <- function(p, min, max, mode) {
 #' @param max Upper limit (b).
 #' @param mode Mode (c).
 #' @return A numeric vector of random deviates.
+#' @importFrom stats runif
 #' @export
 
 rtriang <- function(n, min, max, mode) {
