@@ -144,3 +144,29 @@ qtriang <- function(p, min, max, mode) {
 
   x
 }
+
+#' @title Random Generation for the Triangular Distribution
+#' @description Generates random deviates for a triangular distribution
+#' using the inverse transform sampling method.
+#' @param n Number of observations. If length(n) > 1, the length is taken
+#' to be the number required.
+#' @param min Lower limit (a).
+#' @param max Upper limit (b).
+#' @param mode Mode (c).
+#' @return A numeric vector of random deviates.
+#' @export
+
+rtriang <- function(n, min, max, mode) {
+
+  if (length(n) > 1) {
+    n <- length(n)
+  }
+
+  if (n <= 0) {
+    stop("Invalid arguments: n <= 0")
+  }
+
+  p <- runif(n)
+  qtriang(p, min, max, mode)
+
+}

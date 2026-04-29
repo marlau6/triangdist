@@ -141,3 +141,41 @@ test_that("qtriang: vectorization and recycling rules", {
   expect_length(qtriang(0.5, min = c(0, 0), max = 10, mode = 5), 2)
 })
 
+test_that("rtriang: parameter n and random generation", {
+  # Scenario
+  a <- 0
+  b <- 10
+  c <- 5
+
+  # 1. Normal generation test (positive n)
+  # Set seed to make the random generation predictable
+  set.seed(123)
+
+  res <- rtriang(100, a, b, c)
+  expect_length(res, 100)
+  expect_true(all(res >= a & res <= b))
+
+  # 2. Test n as a vector
+  res_vec <- rtriang(c(1, 2, 3), a, b, c)
+  expect_length(res_vec, 3)
+
+  # 3. Test n = 0
+  expect_error(rtriang(0, a, b, c), "Invalid arguments: n <= 0")
+
+  # 4. Test negative n
+  expect_error(rtriang(-1, a, b, c), "Invalid arguments: n <= 0")
+})
+
+test_that("rtriang: consistency with qtriang", {
+  # Verify that rtriang correctly uses qtriang internally
+
+  set.seed(123)
+  p_val <- runif(1)
+
+  set.seed(123)
+  res_r <- rtriang(1, 0, 10, 5)
+
+  res_q <- qtriang(p_val, 0, 10, 5)
+
+  expect_equal(res_r, res_q)
+})
