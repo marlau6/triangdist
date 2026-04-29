@@ -2,7 +2,7 @@ Package: triangdist
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("Sergio", "Martínez", , "marlau6@alumni.uv.es", role = c("aut", "cre"))
+    person("Sergio", "Martínez", "marlau6@alumni.uv.es", role = c("aut", "cre"))
 Description: An R package for handling the triangular distribution, featuring vectorized density, distribution, quantile, and random generation functions.
 License: GPL (>= 3)
 Encoding: UTF-8
