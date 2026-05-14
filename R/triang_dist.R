@@ -93,11 +93,20 @@ ptriang <- function(q, min, max, mode) {
 #' @title Quantile Function of the Triangular Distribution
 #' @description Calculates the quantile function for a triangular distribution.
 #' This is the inverse of the cumulative distribution function (CDF).
+#'
 #' @param p Vector of probabilities.
 #' @param min Lower limit (a).
 #' @param max Upper limit (b).
 #' @param mode Mode (c).
+#'
 #' @return A numeric vector of quantiles.
+#' @examples
+#' # Basic example
+#' qtriang(0.5, min = 0, max = 10, mode = 4)
+#'
+#' # Several probabilities
+#' qtriang(c(0.1, 0.5, 0.9), min = 0, max = 10, mode = 4)
+#'
 #' @export
 
 qtriang <- function(p, min, max, mode) {
